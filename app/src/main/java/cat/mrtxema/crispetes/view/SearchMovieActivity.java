@@ -4,10 +4,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -23,7 +21,6 @@ import org.androidannotations.annotations.res.StringRes;
 import java.util.List;
 
 import cat.mrtxema.crispetes.model.Movie;
-import cat.mrtxema.crispetes.model.MovieDetails;
 import cat.mrtxema.crispetes.service.MovieService;
 import cat.mrtxema.crispetes.service.MovieServiceException;
 import cat.mrtxema.crispetes.view.adapter.MovieListAdapter;
@@ -73,21 +70,6 @@ public class SearchMovieActivity extends AppCompatActivity {
 
     @ItemClick(R.id.lstMovies)
     void onMovieClick(Movie movie) {
-        retrieveMovieDetails(movie);
-    }
-
-    @Background
-    void retrieveMovieDetails(Movie movie) {
-        try {
-            MovieDetails movieDetails = movieService.getMovieDetails(movie.getId());
-            showMovieDetails(movieDetails);
-        } catch (MovieServiceException e) {
-            Log.e(getClass().getSimpleName(), "Error retrieving movie details", e);
-        }
-    }
-
-    @UiThread
-    void showMovieDetails(MovieDetails movieDetails) {
-        Toast.makeText(this, movieDetails.toString(), Toast.LENGTH_LONG).show();
+        MovieInfoActivity_.intent(this).movieId(movie.getId()).start();
     }
 }

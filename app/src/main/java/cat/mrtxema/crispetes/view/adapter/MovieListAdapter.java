@@ -10,12 +10,11 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import cat.mrtxema.crispetes.view.R;
 import cat.mrtxema.crispetes.model.Movie;
+import cat.mrtxema.crispetes.view.util.DateFormatter;
 
 public class MovieListAdapter extends ArrayAdapter<Movie> {
 
@@ -30,14 +29,13 @@ public class MovieListAdapter extends ArrayAdapter<Movie> {
 
         ((TextView) view.findViewById(R.id.txtTitle)).setText(movie.getTitle());
         ((TextView) view.findViewById(R.id.txtOverview)).setText(movie.getOverview());
-        ((TextView) view.findViewById(R.id.txtRelease)).setText(formatDate(movie.getReleaseDate(), "(yyyy)"));
-        Picasso.with(getContext()).load(movie.getPosterUrl()).into((ImageView) view.findViewById(R.id.imgPoster));
+        ((TextView) view.findViewById(R.id.txtRelease)).setText(DateFormatter.formatDate(movie.getReleaseDate(), "(yyyy)"));
+        Picasso
+                .with(getContext())
+                .load(movie.getPosterUrl())
+                .placeholder(R.mipmap.ic_placeholder)
+                .into((ImageView) view.findViewById(R.id.imgPoster));
 
         return view;
-    }
-
-    private String formatDate(Date releaseDate, String format) {
-        //TODO: cache formatters?
-        return new SimpleDateFormat(format).format(releaseDate);
     }
 }
