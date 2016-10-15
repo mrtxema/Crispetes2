@@ -22,4 +22,12 @@ public class Crew {
     public String getProfileImageUrl() {
         return profileImageUrl;
     }
+
+    @Override
+    public String toString() {
+        return "Crew{" +
+                "name='" + name + '\'' +
+                ", job='" + job + '\'' +
+                '}';
+    }
 }

@@ -28,4 +28,12 @@ public class Cast {
     public String getProfileImageUrl() {
         return profileImageUrl;
     }
+
+    @Override
+    public String toString() {
+        return "Cast{" +
+                "name='" + name + '\'' +
+                ", character='" + character + '\'' +
+                '}';
+    }
 }

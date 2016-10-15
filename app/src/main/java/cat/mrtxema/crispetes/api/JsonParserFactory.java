@@ -42,10 +42,12 @@ public class JsonParserFactory {
                 in.nextNull();
             } else {
                 String dateStr = in.nextString();
-                try {
-                    result = FORMATTER.parse(dateStr);
-                } catch (ParseException e) {
-                    Log.e(getClass().getSimpleName(), "Invalid date: " + dateStr, e);
+                if (dateStr != null && !dateStr.isEmpty()) {
+                    try {
+                        result = FORMATTER.parse(dateStr);
+                    } catch (ParseException e) {
+                        Log.e(getClass().getSimpleName(), "Invalid date: " + dateStr, e);
+                    }
                 }
             }
             return result;
