@@ -1,6 +1,7 @@
 package cat.mrtxema.crispetes.model;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class MovieDetails {
     private final String posterUrl;
     private final String backdropUrl;
     private final Integer budget;
+    private final List<String> genres;
     private final String homepage;
     private final String originalLanguage;
     private final String originalTitle;
@@ -27,8 +29,8 @@ public class MovieDetails {
     private final String status;
     private final BigDecimal voteAverage;
     private final Integer voteCount;
-    private final List<Cast> cast;
-    private final List<Crew> crew;
+    private final List<Cast> castList;
+    private final List<Crew> crewList;
 
     public MovieDetails(MovieDetailsBuilder builder) {
         id = builder.id;
@@ -41,20 +43,21 @@ public class MovieDetails {
         posterUrl = builder.posterUrl;
         backdropUrl = builder.backdropUrl;
         budget = builder.budget;
+        genres = Collections.unmodifiableList(builder.genres);
         homepage = builder.homepage;
         originalLanguage = builder.originalLanguage;
         originalTitle = builder.originalTitle;
         popularity = builder.popularity;
-        productionCompanies = builder.productionCompanies;
-        productionCountries = builder.productionCountries;
+        productionCompanies = Collections.unmodifiableList(builder.productionCompanies);
+        productionCountries = Collections.unmodifiableList(builder.productionCountries);
         revenue = builder.revenue;
         runtime = builder.runtime;
-        spokenLanguages = builder.spokenLanguages;
+        spokenLanguages = Collections.unmodifiableList(builder.spokenLanguages);
         status = builder.status;
         voteAverage = builder.voteAverage;
         voteCount = builder.voteCount;
-        cast = builder.cast;
-        crew = builder.crew;
+        castList = Collections.unmodifiableList(builder.cast);
+        crewList = Collections.unmodifiableList(builder.crew);
     }
 
     public Integer getId() {
@@ -95,6 +98,10 @@ public class MovieDetails {
 
     public Integer getBudget() {
         return budget;
+    }
+
+    public List<String> getGenres() {
+        return genres;
     }
 
     public String getHomepage() {
@@ -145,12 +152,21 @@ public class MovieDetails {
         return voteCount;
     }
 
-    public List<Cast> getCast() {
-        return cast;
+    public List<Cast> getCastList() {
+        return castList;
     }
 
-    public List<Crew> getCrew() {
-        return crew;
+    public List<Crew> getCrewList() {
+        return crewList;
+    }
+
+    public Crew getCrewItem(CrewJob job) {
+        for (Crew crew : crewList) {
+            if (job.getName().equals(crew.getJob())) {
+                return crew;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -178,8 +194,8 @@ public class MovieDetails {
                 ", status='" + status + '\'' +
                 ", voteAverage=" + voteAverage +
                 ", voteCount=" + voteCount +
-                ", cast=" + cast +
-                ", crew=" + crew +
+                ", castList=" + castList +
+                ", crewList=" + crewList +
                 '}';
     }
 }

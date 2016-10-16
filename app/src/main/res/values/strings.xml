@@ -3,4 +3,12 @@
     <string name="action_settings">Settings</string>
     <string name="search">Buscar</string>
     <string name="noresults">No results found</string>
+    <string name="originalTitle">Título original</string>
+    <string name="genres">Géneros</string>
+    <string name="director">Director</string>
+    <string name="scoreValue">%1$.2f (%2$d votos)</string>
+    <string name="score">Puntuación</string>
+    <string name="productionCompany">Productora</string>
+    <string name="productionCompanyValue">%1$s (%2$s)</string>
+    <string name="cast">Reparto</string>
 </resources>

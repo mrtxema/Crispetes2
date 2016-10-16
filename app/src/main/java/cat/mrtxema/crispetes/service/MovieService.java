@@ -10,6 +10,7 @@ import cat.mrtxema.crispetes.api.tmdb.TmdbCompany;
 import cat.mrtxema.crispetes.api.tmdb.TmdbConfiguration;
 import cat.mrtxema.crispetes.api.tmdb.TmdbCountry;
 import cat.mrtxema.crispetes.api.tmdb.TmdbCrew;
+import cat.mrtxema.crispetes.api.tmdb.TmdbGenre;
 import cat.mrtxema.crispetes.api.tmdb.TmdbLanguage;
 import cat.mrtxema.crispetes.api.tmdb.TmdbMovie;
 import cat.mrtxema.crispetes.api.tmdb.TmdbMovieDetails;
@@ -93,6 +94,7 @@ public class MovieService {
                     .setPosterUrl(buildPosterUrl(tmdbConfiguration, apiMovieDetails.getPosterPath()))
                     .setBackdropUrl(buildBackdropUrl(tmdbConfiguration, apiMovieDetails.getBackdropPath()))
                     .setBudget(apiMovieDetails.getBudget())
+                    .setGenres(new ListConverter<>(new GenreConverter()).convert(apiMovieDetails.getGenres()))
                     .setHomepage(apiMovieDetails.getHomepage())
                     .setOriginalLanguage(apiMovieDetails.getOriginalLanguage())
                     .setOriginalTitle(apiMovieDetails.getOriginalTitle())
@@ -122,6 +124,13 @@ public class MovieService {
         @Override
         public String convert(TmdbCountry country) {
             return country.getIsoCode();
+        }
+    }
+
+    private static class GenreConverter implements Converter<TmdbGenre,String> {
+        @Override
+        public String convert(TmdbGenre tmdbGenre) {
+            return tmdbGenre.getName();
         }
     }
 

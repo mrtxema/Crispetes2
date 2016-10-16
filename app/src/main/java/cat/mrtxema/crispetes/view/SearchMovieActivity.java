@@ -1,19 +1,15 @@
 package cat.mrtxema.crispetes.view;
 
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ItemClick;
-import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.res.StringRes;
@@ -26,12 +22,9 @@ import cat.mrtxema.crispetes.service.MovieServiceException;
 import cat.mrtxema.crispetes.view.adapter.MovieListAdapter;
 
 @EActivity(R.layout.activity_search)
-@OptionsMenu(R.menu.menu_sample)
-public class SearchMovieActivity extends AppCompatActivity {
+public class SearchMovieActivity extends BaseActivity {
     @Bean
     MovieService movieService;
-    @ViewById(R.id.toolbar)
-    Toolbar toolbar;
     @ViewById(R.id.txtMovie)
     EditText txtMovie;
     @ViewById(R.id.lstMovies)
@@ -39,13 +32,9 @@ public class SearchMovieActivity extends AppCompatActivity {
     @StringRes(R.string.noresults)
     String noResults;
 
-    @AfterViews
-    protected void bindActionBar() {
-        setSupportActionBar(toolbar);
-    }
-
     @Click(R.id.btnSearchMovie)
     void onSearchButtonClick() {
+        hideKeyboard();
         performMovieSearch(txtMovie.getText().toString());
     }
 

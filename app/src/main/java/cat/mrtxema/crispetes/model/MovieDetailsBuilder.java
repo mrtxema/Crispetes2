@@ -15,6 +15,7 @@ public class MovieDetailsBuilder {
     String posterUrl;
     String backdropUrl;
     Integer budget;
+    List<String> genres;
     String homepage;
     String originalLanguage;
     String originalTitle;
@@ -77,6 +78,11 @@ public class MovieDetailsBuilder {
 
     public MovieDetailsBuilder setBudget(Integer budget) {
         this.budget = budget;
+        return this;
+    }
+
+    public MovieDetailsBuilder setGenres(List<String> genres) {
+        this.genres = genres;
         return this;
     }
 

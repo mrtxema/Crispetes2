@@ -1,9 +1,7 @@
 package cat.mrtxema.crispetes.view;
 
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.ArrayAdapter;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -15,26 +13,25 @@ import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
-import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
 
-import cat.mrtxema.crispetes.model.Cast;
 import cat.mrtxema.crispetes.model.Crew;
+import cat.mrtxema.crispetes.model.CrewJob;
 import cat.mrtxema.crispetes.model.MovieDetails;
 import cat.mrtxema.crispetes.service.MovieService;
 import cat.mrtxema.crispetes.service.MovieServiceException;
+import cat.mrtxema.crispetes.view.adapter.CastListAdapter;
 import cat.mrtxema.crispetes.view.util.DateFormatter;
+import cat.mrtxema.crispetes.view.util.StringFormatter;
+import cat.mrtxema.crispetes.view.util.ViewUtils;
 
 @EActivity(R.layout.activity_movie_detail)
-@OptionsMenu(R.menu.menu_sample)
-public class MovieInfoActivity extends AppCompatActivity {
+public class MovieInfoActivity extends BaseActivity {
     @Bean
     MovieService movieService;
-    @ViewById(R.id.toolbar)
-    Toolbar toolbar;
     @Extra
     Integer movieId;
 
@@ -53,28 +50,23 @@ public class MovieInfoActivity extends AppCompatActivity {
     @ViewById
     TextView txtHomepage;
     @ViewById
-    TextView txtOriginalLanguage;
+    TextView txtGenres;
     @ViewById
     TextView txtOriginalTitle;
     @ViewById
-    TextView txtVoteCount;
-    @ViewById
-    TextView txtVoteAverage;
+    TextView txtScoreValue;
     @ViewById
     TextView txtStatus;
     @ViewById
-    TextView txtProductionCountries;
+    TextView txtProductionCompany;
     @ViewById
-    TextView txtProductionCompanies;
+    TextView txtDirector;
     @ViewById
     ListView lstCast;
-    @ViewById
-    ListView lstCrew;
 
 
     @AfterViews
     protected void initViews() {
-        setSupportActionBar(toolbar);
         retrieveMovieDetails(movieId);
     }
 
@@ -93,23 +85,25 @@ public class MovieInfoActivity extends AppCompatActivity {
         Picasso.with(this).load(movieDetails.getPosterUrl()).placeholder(R.mipmap.ic_placeholder).into(imgPoster);
         Picasso.with(this).load(movieDetails.getBackdropUrl()).placeholder(R.mipmap.ic_placeholder).into(imgBackdrop);
         txtTitle.setText(movieDetails.getTitle());
-        txtOverview.setText(movieDetails.getOverview());
-        txtRelease.setText(DateFormatter.formatDate(movieDetails.getReleaseDate(), "dd/MM/yyyy"));
-        txtTagline.setText(movieDetails.getTagline());
-        txtHomepage.setText(movieDetails.getHomepage());
-        txtOriginalLanguage.setText(movieDetails.getOriginalLanguage());
-        txtOriginalTitle.setText(movieDetails.getOriginalTitle());
-        txtVoteCount.setText(movieDetails.getVoteCount().toString());
-        txtVoteAverage.setText(movieDetails.getVoteAverage().toString());
-        txtStatus.setText(movieDetails.getStatus());
-        txtProductionCountries.setText(formatList(movieDetails.getProductionCountries()));
-        txtProductionCompanies.setText(formatList(movieDetails.getProductionCompanies()));
-        lstCast.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, movieDetails.getCast()));
-        lstCrew.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, movieDetails.getCrew()));
+        txtRelease.setText(DateFormatter.formatDate(movieDetails.getReleaseDate(), DateFormatter.FULL_DATE_FORMAT));
+        txtStatus.setText(StringFormatter.addParenthesis(movieDetails.getStatus()));
+        ViewUtils.setTextOrHide(txtOverview, movieDetails.getOverview());
+        ViewUtils.setTextOrHide(txtTagline, movieDetails.getTagline());
+        ViewUtils.setTextOrHide(txtHomepage, movieDetails.getHomepage());
+        ViewUtils.setTextOrHideParent(txtGenres, StringFormatter.joinList(movieDetails.getGenres(), StringFormatter.COMMA_SEPARATOR));
+        ViewUtils.setTextOrHideParent(txtOriginalTitle, movieDetails.getOriginalTitle());
+        ViewUtils.setTextOrHideParent(txtScoreValue, movieDetails.getVoteAverage() == null ? null : getString(
+                R.string.scoreValue,
+                movieDetails.getVoteAverage(),
+                movieDetails.getVoteCount()
+        ));
+        ViewUtils.setTextOrHideParent(txtProductionCompany, movieDetails.getProductionCompanies().isEmpty() ? null : getString(
+                R.string.productionCompanyValue,
+                StringFormatter.joinList(movieDetails.getProductionCompanies(), StringFormatter.COMMA_SEPARATOR),
+                StringFormatter.joinList(movieDetails.getProductionCountries(), StringFormatter.COMMA_SEPARATOR)
+         ));
+        Crew director = movieDetails.getCrewItem(CrewJob.DIRECTOR);
+        ViewUtils.setTextOrHideParent(txtDirector, director == null ? null : director.getName());
+        lstCast.setAdapter(new CastListAdapter(this, movieDetails.getCastList()));
     }
-
-    private String formatList(List<String> stringList) {
-        return stringList.toString();
-    }
-
 }
