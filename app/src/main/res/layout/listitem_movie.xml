@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="5dp"
-    android:layout_alignParentBottom="true">
+    android:layout_alignParentBottom="true"
+    android:baselineAligned="false">
 
     <LinearLayout android:layout_width="100dp" android:layout_height="wrap_content" android:layout_weight="0.2" android:orientation="vertical">
         <ImageView
@@ -16,6 +17,7 @@
             android:maxHeight="140dp"
             android:scaleType="fitCenter"
             android:src="@mipmap/ic_placeholder"
+            android:contentDescription="@string/poster"
             />
     </LinearLayout>
 
@@ -25,25 +27,25 @@
                 android:id="@+id/txtTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14dp"
+                android:textSize="14sp"
                 android:textStyle="bold"
-                android:text="Hotel Transilvania"
                 />
             <TextView
                 android:id="@+id/txtRelease"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14dp"
-                android:layout_marginLeft="10px"
-                android:text="(2013)"
+                android:textSize="14sp"
+                android:layout_marginStart="10dp"
                 />
         </LinearLayout>
         <TextView
             android:id="@+id/txtOverview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10dp"
-            />
+            android:textSize="12sp"
+            android:maxLines="5"
+            android:ellipsize="end"
+        />
     </LinearLayout>
 
 </LinearLayout>

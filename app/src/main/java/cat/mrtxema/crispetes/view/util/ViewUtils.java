@@ -1,7 +1,11 @@
 package cat.mrtxema.crispetes.view.util;
 
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 
 public class ViewUtils {
     public static void setTextOrHideParent(TextView textView, String s) {
@@ -23,5 +27,15 @@ public class ViewUtils {
 
     private static boolean isEmpty(String s) {
         return s == null || s.isEmpty();
+    }
+
+    public static void setAdapter(ExpandableLinearLayout layout, Adapter adapter) {
+        if (adapter.getCount() > 0) {
+            layout.removeAllViews();
+            for (int i = 0; i < adapter.getCount(); i++) {
+                layout.addView(adapter.getView(i, null, layout));
+            }
+            layout.initLayout();
+        }
     }
 }

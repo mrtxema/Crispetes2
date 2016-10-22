@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <include layout="@layout/content_toolbar" />
+
+    <LinearLayout
+        android:id="@+id/content_sample"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:orientation="vertical">
 
     <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,7 +27,7 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:padding="5dp">
 
                 <LinearLayout
@@ -32,72 +45,75 @@
                         android:maxHeight="250dp"
                         android:scaleType="fitCenter"
                         android:src="@mipmap/ic_placeholder"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:contentDescription="@string/poster"
                         />
 
-                    <ImageView
-                        android:id="@+id/imgBackdrop"
+                    <LinearLayout
+                        android:orientation="vertical"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        android:adjustViewBounds="true"
-                        android:maxWidth="150dp"
-                        android:maxHeight="250dp"
-                        android:scaleType="fitCenter"
-                        android:src="@mipmap/ic_placeholder"
-                        />
+                        >
+
+                        <TextView
+                            android:id="@+id/txtTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            />
+
+                        <TextView
+                            android:id="@+id/txtRelease"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            />
+
+                        <TextView
+                            android:id="@+id/txtStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            />
+
+                    </LinearLayout>
 
                  </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/txtTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14dp"
-                        android:textStyle="bold"
-                        />
-
-                    <TextView
-                        android:id="@+id/txtRelease"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14dp"
-                        android:layout_marginLeft="10px"
-                        />
-
-                    <TextView
-                        android:id="@+id/txtStatus"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14dp"
-                        />
-
-                </LinearLayout>
 
                 <TextView
                     android:id="@+id/txtTagline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14dp"
+                    android:textSize="14sp"
+                    android:textStyle="italic"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="15dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/overview"
+                    android:textStyle="bold"
+                    android:labelFor="@+id/txtOverview"
+                    android:textSize="14sp"
+                    android:layout_marginEnd="5dp"
                     />
 
                 <TextView
                     android:id="@+id/txtOverview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12dp"
+                    android:textSize="14sp"
                     />
 
                 <TextView
                     android:id="@+id/txtHomepage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14dp"
+                    android:textSize="14sp"
                     />
 
                 <LinearLayout
@@ -111,15 +127,15 @@
                         android:text="@string/genres"
                         android:textStyle="bold"
                         android:labelFor="@+id/txtGenres"
-                        android:textSize="14dp"
-                        android:layout_marginRight="5dp"
+                        android:textSize="14sp"
+                        android:layout_marginEnd="5dp"
                         />
 
                     <TextView
                         android:id="@+id/txtGenres"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14dp"
+                        android:textSize="14sp"
                         />
 
                 </LinearLayout>
@@ -135,15 +151,15 @@
                         android:text="@string/originalTitle"
                         android:textStyle="bold"
                         android:labelFor="@+id/txtOriginalTitle"
-                        android:textSize="14dp"
-                        android:layout_marginRight="5dp"
+                        android:textSize="14sp"
+                        android:layout_marginEnd="5dp"
                         />
 
                     <TextView
                         android:id="@+id/txtOriginalTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14dp"
+                        android:textSize="14sp"
                         />
 
                 </LinearLayout>
@@ -159,15 +175,15 @@
                         android:text="@string/score"
                         android:textStyle="bold"
                         android:labelFor="@+id/txtScoreValue"
-                        android:textSize="14dp"
-                        android:layout_marginRight="5dp"
+                        android:textSize="14sp"
+                        android:layout_marginEnd="5dp"
                         />
 
                     <TextView
                         android:id="@+id/txtScoreValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14dp"
+                        android:textSize="14sp"
                         />
 
                 </LinearLayout>
@@ -183,15 +199,15 @@
                         android:text="@string/productionCompany"
                         android:textStyle="bold"
                         android:labelFor="@id/txtStatus"
-                        android:textSize="14dp"
-                        android:layout_marginRight="5dp"
+                        android:textSize="14sp"
+                        android:layout_marginEnd="5dp"
                         />
 
                     <TextView
                         android:id="@+id/txtProductionCompany"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14dp"
+                        android:textSize="14sp"
                         />
 
                 </LinearLayout>
@@ -204,34 +220,119 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/director"
+                        android:text="@string/country"
                         android:textStyle="bold"
-                        android:labelFor="@+id/txtDirector"
-                        android:textSize="14dp"
-                        android:layout_marginRight="5dp"
+                        android:labelFor="@+id/txtProductionCountry"
+                        android:textSize="14sp"
+                        android:layout_marginEnd="5dp"
                         />
 
                     <TextView
-                        android:id="@+id/txtDirector"
+                        android:id="@+id/txtProductionCountry"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14dp"
+                        android:textSize="14sp"
                         />
 
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/imgBackdrop"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/cast"
-                    android:textStyle="bold"
-                    android:labelFor="@+id/lstCast"
-                    android:textSize="14dp"
+                    android:adjustViewBounds="true"
+                    android:maxHeight="250dp"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/ic_placeholder"
+                    android:contentDescription="@string/backdrop"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     />
 
-                <ListView android:id="@+id/lstCast" android:layout_width="fill_parent" android:layout_height="300dp"/>
+                <Button
+                    android:id="@+id/btnCast"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@android:drawable/arrow_down_float"
+                    android:text="@string/cast"
+                    android:textSize="12sp" />
 
-        </LinearLayout>
+                <com.github.aakira.expandablelayout.ExpandableLinearLayout
+                    android:id="@+id/layoutCast"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:ael_expanded="false"
+                    app:ael_duration="500"
+                    app:ael_interpolator="bounce"
+                    app:ael_orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/noresults"
+                        />
+
+                </com.github.aakira.expandablelayout.ExpandableLinearLayout>
+
+                <Button
+                    android:id="@+id/btnCrew"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@android:drawable/arrow_down_float"
+                    android:text="@string/crew"
+                    android:textSize="12sp" />
+
+                <com.github.aakira.expandablelayout.ExpandableLinearLayout
+                    android:id="@+id/layoutCrew"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:ael_expanded="false"
+                    app:ael_duration="500"
+                    app:ael_interpolator="bounce"
+                    app:ael_orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/noresults"
+                        />
+
+                </com.github.aakira.expandablelayout.ExpandableLinearLayout>
+
+                <Button
+                    android:id="@+id/btnVideos"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@android:drawable/arrow_down_float"
+                    android:text="@string/crew"
+                    android:textSize="12sp" />
+
+                <com.github.aakira.expandablelayout.ExpandableLinearLayout
+                    android:id="@+id/layoutVideos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:ael_expanded="false"
+                    app:ael_duration="500"
+                    app:ael_interpolator="bounce"
+                    app:ael_orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/noresults"
+                        />
+
+                </com.github.aakira.expandablelayout.ExpandableLinearLayout>
+
+            </LinearLayout>
     </ScrollView>
 
-</LinearLayout>
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

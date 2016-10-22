@@ -9,6 +9,10 @@
     <string name="scoreValue">%1$.2f (%2$d votos)</string>
     <string name="score">Puntuación</string>
     <string name="productionCompany">Productora</string>
-    <string name="productionCompanyValue">%1$s (%2$s)</string>
     <string name="cast">Reparto</string>
+    <string name="crew">Equipo técnico</string>
+    <string name="poster">Poster</string>
+    <string name="backdrop">Fondo</string>
+    <string name="overview">Resumen</string>
+    <string name="country">País</string>
 </resources>

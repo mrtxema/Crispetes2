@@ -160,15 +160,6 @@ public class MovieDetails {
         return crewList;
     }
 
-    public Crew getCrewItem(CrewJob job) {
-        for (Crew crew : crewList) {
-            if (job.getName().equals(crew.getJob())) {
-                return crew;
-            }
-        }
-        return null;
-    }
-
     @Override
     public String toString() {
         return "MovieDetails{" +
