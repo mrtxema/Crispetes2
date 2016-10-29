@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -23,12 +22,25 @@ public abstract class BaseActivity extends AppCompatActivity {
     @AfterViews
     protected void bindActionBar() {
         setSupportActionBar(toolbar);
+        if (!isMainActivity() && getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+    }
+
+    protected boolean isMainActivity() {
+        return false;
     }
 
     @OptionsItem(R.id.action_settings)
-    void showSettings(MenuItem item) {
+    void showSettings() {
         View view = getWindow().getDecorView();
         Snackbar.make(view, "Settings clicked", Snackbar.LENGTH_LONG).setAction("Click", null).show();
+    }
+
+    @OptionsItem(android.R.id.home)
+    void goBack() {
+        finish();
     }
 
     protected void hideKeyboard() {

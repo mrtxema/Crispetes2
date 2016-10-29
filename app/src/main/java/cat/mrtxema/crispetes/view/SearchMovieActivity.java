@@ -1,19 +1,22 @@
 package cat.mrtxema.crispetes.view;
 
-import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.EditorAction;
 import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.res.StringRes;
 
+import java.util.Collections;
 import java.util.List;
 
 import cat.mrtxema.crispetes.model.Movie;
@@ -29,32 +32,43 @@ public class SearchMovieActivity extends BaseActivity {
     EditText txtMovie;
     @ViewById(R.id.lstMovies)
     ListView lstMovies;
-    @StringRes(R.string.noresults)
-    String noResults;
+    @ViewById(R.id.noResults)
+    TextView noResultsMsg;
 
-    @Click(R.id.btnSearchMovie)
-    void onSearchButtonClick() {
-        hideKeyboard();
-        performMovieSearch(txtMovie.getText().toString());
+    @EditorAction(R.id.txtMovie)
+    boolean onSearchClick(int actionId) {
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            hideKeyboard();
+            performMovieSearch(txtMovie.getText().toString());
+            return true;
+        }
+        return false;
+    }
+
+    @Click(R.id.btnClearSearch)
+    void onClearSearch() {
+        txtMovie.setText("");
+        showMovies(Collections.<Movie>emptyList(), false);
     }
 
     @Background
     void performMovieSearch(String title) {
         try {
             List<Movie> movies = movieService.search(title);
-            showMovies(movies);
+            showMovies(movies, true);
         } catch (MovieServiceException e) {
             Log.e(getClass().getSimpleName(), "Error searching movies", e);
         }
     }
 
     @UiThread
-    void showMovies(List<Movie> movies) {
+    void showMovies(List<Movie> movies, boolean searchPerformed) {
         lstMovies.setAdapter(new MovieListAdapter(this, movies));
-        if (movies.isEmpty()) {
-            Snackbar.make(lstMovies, noResults, Snackbar.LENGTH_LONG).setAction("TODO", null).show();
+        if (searchPerformed && movies.isEmpty()) {
+            noResultsMsg.setVisibility(View.VISIBLE);
+        } else {
+            noResultsMsg.setVisibility(View.GONE);
         }
-
     }
 
     @ItemClick(R.id.lstMovies)

@@ -294,6 +294,7 @@
                     android:layout_height="wrap_content"
                     android:drawableEnd="@android:drawable/arrow_down_float"
                     android:text="@string/cast"
+                    style="@style/Widget.AppCompat.Button.Colored"
                     android:textSize="12sp" />
 
                 <com.github.aakira.expandablelayout.ExpandableLinearLayout
@@ -321,6 +322,7 @@
                     android:layout_height="wrap_content"
                     android:drawableEnd="@android:drawable/arrow_down_float"
                     android:text="@string/crew"
+                    style="@style/Widget.AppCompat.Button.Colored"
                     android:textSize="12sp" />
 
                 <com.github.aakira.expandablelayout.ExpandableLinearLayout
@@ -348,6 +350,7 @@
                     android:layout_height="wrap_content"
                     android:drawableEnd="@android:drawable/arrow_down_float"
                     android:text="@string/videos"
+                    style="@style/Widget.AppCompat.Button.Colored"
                     android:textSize="12sp" />
 
                 <com.github.aakira.expandablelayout.ExpandableLinearLayout
