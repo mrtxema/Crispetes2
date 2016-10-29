@@ -1,11 +1,10 @@
 <resources>
     <string name="app_name">Crispetes</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Ajustes</string>
     <string name="search">Buscar</string>
     <string name="noresults">No results found</string>
     <string name="originalTitle">Título original</string>
     <string name="genres">Géneros</string>
-    <string name="director">Director</string>
     <string name="scoreValue">%1$.2f (%2$d votos)</string>
     <string name="score">Puntuación</string>
     <string name="productionCompany">Productora</string>
@@ -15,4 +14,8 @@
     <string name="backdrop">Fondo</string>
     <string name="overview">Resumen</string>
     <string name="country">País</string>
+    <string name="runtime">Duración</string>
+    <string name="release">Estreno</string>
+    <string name="n_minutes">%d minutos</string>
+    <string name="videos">Videos</string>
 </resources>

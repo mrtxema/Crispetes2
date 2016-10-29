@@ -54,7 +54,7 @@ public class MovieInfoActivity extends BaseActivity {
     @ViewById
     TextView txtScoreValue;
     @ViewById
-    TextView txtStatus;
+    TextView txtRuntime;
     @ViewById
     TextView txtProductionCompany;
     @ViewById
@@ -85,8 +85,8 @@ public class MovieInfoActivity extends BaseActivity {
         Picasso.with(this).load(movieDetails.getPosterUrl()).placeholder(R.mipmap.ic_placeholder).into(imgPoster);
         Picasso.with(this).load(movieDetails.getBackdropUrl()).placeholder(R.mipmap.ic_placeholder).into(imgBackdrop);
         txtTitle.setText(movieDetails.getTitle());
-        txtRelease.setText(DateFormatter.formatDate(movieDetails.getReleaseDate(), DateFormatter.FULL_DATE_FORMAT));
-        txtStatus.setText(StringFormatter.addParenthesis(movieDetails.getStatus()));
+        ViewUtils.setTextOrHideParent(txtRelease, DateFormatter.formatDate(movieDetails.getReleaseDate(), DateFormatter.FULL_DATE_FORMAT));
+        ViewUtils.setTextOrHideParent(txtRuntime, isNull(movieDetails.getRuntime()) ? null : getString(R.string.n_minutes, movieDetails.getRuntime()));
         ViewUtils.setTextOrHide(txtOverview, movieDetails.getOverview());
         ViewUtils.setTextOrHide(txtTagline, movieDetails.getTagline());
         ViewUtils.setTextOrHide(txtHomepage, movieDetails.getHomepage());
@@ -101,6 +101,10 @@ public class MovieInfoActivity extends BaseActivity {
         ViewUtils.setTextOrHideParent(txtProductionCountry, StringFormatter.joinList(movieDetails.getProductionCountries(), StringFormatter.COMMA_SEPARATOR));
         ViewUtils.setAdapter(layoutCast, new CastListAdapter(this, movieDetails.getCastList()));
         ViewUtils.setAdapter(layoutCrew, new CrewListAdapter(this, movieDetails.getCrewList()));
+    }
+
+    private boolean isNull(Integer n) {
+        return n == null || n == 0;
     }
 
     @Click(R.id.btnCast)

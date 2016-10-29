@@ -1,19 +1,23 @@
 package cat.mrtxema.crispetes.api.tmdb;
 
+import android.util.Log;
+
 import org.androidannotations.annotations.EBean;
 import java.io.IOException;
 import cat.mrtxema.crispetes.api.JsonParserFactory;
+import cat.mrtxema.crispetes.util.StringXor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @EBean
 public class TmdbServiceManager {
     private static final String BASE_URL = "https://api.themoviedb.org/3/";
-    private static final String API_KEY = "40f0a0620e8baddd6576e3fe2626406e";
+    private static final String API_KEY = new StringXor().decode("Z0QUWQ9Xbl1CNkwQCAoDPFlHZEIXWggCallAZUBCXws=");
     private final TmdbService tmdbService = initTmdbService();
     private TmdbConfiguration tmdbConfiguration;
 
     private TmdbService initTmdbService() {
+        //Log.w(getClass().getSimpleName(), "API KEY xor: " + new StringXor().encode("40f0a0620e8baddd6576e3fe2626406e"));
         return new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(JsonParserFactory.getJsonParser()))
