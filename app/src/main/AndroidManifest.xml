@@ -21,6 +21,8 @@
 
         <activity android:name=".MovieInfoActivity_" android:label="@string/app_name" android:theme="@style/AppTheme.NoActionBar" />
 
+        <activity android:name=".ImageActivity_" android:label="@string/app_name" android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>

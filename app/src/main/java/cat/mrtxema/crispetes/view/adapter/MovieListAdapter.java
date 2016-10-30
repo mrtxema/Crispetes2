@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 import java.util.List;
 import cat.mrtxema.crispetes.view.R;
 import cat.mrtxema.crispetes.model.Movie;
@@ -13,7 +15,7 @@ import cat.mrtxema.crispetes.view.util.DateFormatter;
 public class MovieListAdapter extends BaseListAdapter<Movie> {
 
     public MovieListAdapter(Context context, List<Movie> movies) {
-        super(context, R.layout.listitem_movie, movies);
+        super(context, R.layout.listitem_movie, new ArrayList<>(movies));
     }
 
     @Override

@@ -2,6 +2,7 @@ package cat.mrtxema.crispetes.view.util;
 
 import android.view.View;
 import android.widget.Adapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -37,5 +38,9 @@ public class ViewUtils {
             }
             layout.initLayout();
         }
+    }
+
+    public static void showOrHide(View viewToHide, String value) {
+        viewToHide.setVisibility(isEmpty(value) ? View.GONE : View.VISIBLE);
     }
 }

@@ -67,7 +67,8 @@
                         <LinearLayout
                             android:orientation="horizontal"
                             android:layout_width="fill_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -91,7 +92,8 @@
                         <LinearLayout
                             android:orientation="horizontal"
                             android:layout_width="fill_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -113,9 +115,10 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:orientation="horizontal"
+                            android:orientation="vertical"
                             android:layout_width="fill_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -151,21 +154,31 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/overview"
-                    android:textStyle="bold"
-                    android:labelFor="@+id/txtOverview"
-                    android:textSize="14sp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="5dp"
-                    />
+                    android:layout_height="10dp" />
 
-                <TextView
-                    android:id="@+id/txtOverview"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    />
+                    android:layout_marginTop="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/overview"
+                            android:textStyle="bold"
+                            android:labelFor="@+id/txtOverview"
+                            android:textSize="14sp"
+                            />
+
+                        <TextView
+                            android:id="@+id/txtOverview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            />
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/txtHomepage"
@@ -285,8 +298,11 @@
                     android:src="@mipmap/ic_placeholder"
                     android:contentDescription="@string/backdrop"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
                     />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="10dp" />
 
                 <Button
                     android:id="@+id/btnCast"

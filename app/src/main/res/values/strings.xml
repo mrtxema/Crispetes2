@@ -6,7 +6,7 @@
     <string name="originalTitle">Título original</string>
     <string name="genres">Géneros</string>
     <string name="scoreValue">%1$.2f (%2$d votos)</string>
-    <string name="score">Puntuación</string>
+    <string name="score">Valoración</string>
     <string name="productionCompany">Productora</string>
     <string name="cast">Reparto</string>
     <string name="crew">Equipo técnico</string>

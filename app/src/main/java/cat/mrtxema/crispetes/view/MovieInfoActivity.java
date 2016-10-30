@@ -1,6 +1,9 @@
 package cat.mrtxema.crispetes.view;
 
 import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,6 +35,7 @@ public class MovieInfoActivity extends BaseActivity {
     MovieService movieService;
     @Extra
     Integer movieId;
+    private MovieDetails movieDetails;
 
     @ViewById
     ImageView imgPoster;
@@ -73,7 +77,7 @@ public class MovieInfoActivity extends BaseActivity {
     @Background
     void retrieveMovieDetails(int movieId) {
         try {
-            MovieDetails movieDetails = movieService.getMovieDetails(movieId);
+            movieDetails = movieService.getMovieDetails(movieId);
             showMovieDetails(movieDetails);
         } catch (MovieServiceException e) {
             Log.e(getClass().getSimpleName(), "Error retrieving movie details", e);
@@ -84,15 +88,16 @@ public class MovieInfoActivity extends BaseActivity {
     void showMovieDetails(MovieDetails movieDetails) {
         Picasso.with(this).load(movieDetails.getPosterUrl()).placeholder(R.mipmap.ic_placeholder).into(imgPoster);
         Picasso.with(this).load(movieDetails.getBackdropUrl()).placeholder(R.mipmap.ic_placeholder).into(imgBackdrop);
+        ViewUtils.showOrHide(imgBackdrop, movieDetails.getBackdropUrl());
         txtTitle.setText(movieDetails.getTitle());
         ViewUtils.setTextOrHideParent(txtRelease, DateFormatter.formatDate(movieDetails.getReleaseDate(), DateFormatter.FULL_DATE_FORMAT));
         ViewUtils.setTextOrHideParent(txtRuntime, isNull(movieDetails.getRuntime()) ? null : getString(R.string.n_minutes, movieDetails.getRuntime()));
-        ViewUtils.setTextOrHide(txtOverview, movieDetails.getOverview());
+        ViewUtils.setTextOrHideParent(txtOverview, movieDetails.getOverview());
         ViewUtils.setTextOrHide(txtTagline, movieDetails.getTagline());
         ViewUtils.setTextOrHide(txtHomepage, movieDetails.getHomepage());
         ViewUtils.setTextOrHideParent(txtGenres, StringFormatter.joinList(movieDetails.getGenres(), StringFormatter.COMMA_SEPARATOR));
         ViewUtils.setTextOrHideParent(txtOriginalTitle, movieDetails.getOriginalTitle());
-        ViewUtils.setTextOrHideParent(txtScoreValue, movieDetails.getVoteAverage() == null ? null : getString(
+        ViewUtils.setTextOrHideParent(txtScoreValue, isNull(movieDetails.getVoteCount()) ? null : getString(
                 R.string.scoreValue,
                 movieDetails.getVoteAverage(),
                 movieDetails.getVoteCount()
@@ -105,6 +110,16 @@ public class MovieInfoActivity extends BaseActivity {
 
     private boolean isNull(Integer n) {
         return n == null || n == 0;
+    }
+
+    @Click(R.id.imgPoster)
+    void onPosterClick() {
+        ImageActivity_.intent(this).url(movieDetails.getPosterUrl()).start();
+    }
+
+    @Click(R.id.imgBackdrop)
+    void onBackdropClick() {
+        ImageActivity_.intent(this).url(movieDetails.getBackdropUrl()).start();
     }
 
     @Click(R.id.btnCast)

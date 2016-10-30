@@ -4,7 +4,9 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 
 import java.util.List;
+import java.util.Locale;
 
+import cat.mrtxema.crispetes.api.tmdb.SearchMoviesResponse;
 import cat.mrtxema.crispetes.api.tmdb.TmdbCast;
 import cat.mrtxema.crispetes.api.tmdb.TmdbCompany;
 import cat.mrtxema.crispetes.api.tmdb.TmdbConfiguration;
@@ -21,19 +23,35 @@ import cat.mrtxema.crispetes.model.Crew;
 import cat.mrtxema.crispetes.model.Movie;
 import cat.mrtxema.crispetes.model.MovieDetails;
 import cat.mrtxema.crispetes.model.MovieDetailsBuilder;
+import cat.mrtxema.crispetes.model.SearchResponse;
 import cat.mrtxema.crispetes.service.converter.Converter;
 import cat.mrtxema.crispetes.service.converter.ListConverter;
 
 @EBean
 public class MovieService {
-    private static final String DEFAULT_LANGUAGE = "es-ES";
+    private static final String DEVICE_LANGUAGE = getDeviceLanguage();
     @Bean
     TmdbServiceManager tmdbServiceManager;
 
-    public List<Movie> search(String title) throws MovieServiceException {
+    private static String getDeviceLanguage() {
+        Locale deviceLocale = Locale.getDefault();
+        String language = deviceLocale.getLanguage();
+        String country = deviceLocale.getCountry();
+        if (language.equals("ca")) {
+            // There's almost no catalan content in TMDB
+            return "es-ES";
+        } else if (country == null || country.isEmpty()) {
+            return language;
+        } else {
+            return String.format("%s-%s", language, country);
+        }
+    }
+
+    public SearchResponse<Movie> search(String title, int page) throws MovieServiceException {
         try {
-            List<TmdbMovie> apiMovies = tmdbServiceManager.searchMovies(title, DEFAULT_LANGUAGE, 1).getResults();
-            return new ListConverter<>(new MovieConverter(tmdbServiceManager.getConfiguration())).convert(apiMovies);
+            SearchMoviesResponse response = tmdbServiceManager.searchMovies(title, DEVICE_LANGUAGE, page);
+            List<Movie> movies = new ListConverter<>(new MovieConverter(tmdbServiceManager.getConfiguration())).convert(response.getResults());
+            return new SearchResponse<>(response.getPage(), response.getTotalResults(), response.getTotalPages(), movies);
         } catch (TmdbServiceException e) {
             throw new MovieServiceException(e.getMessage(), e);
         }
@@ -41,23 +59,35 @@ public class MovieService {
 
     public MovieDetails getMovieDetails(int id) throws MovieServiceException {
         try {
-            TmdbMovieDetails apiMovieDetails = tmdbServiceManager.getMovieDetails(id, DEFAULT_LANGUAGE);
+            TmdbMovieDetails apiMovieDetails = tmdbServiceManager.getMovieDetails(id, DEVICE_LANGUAGE);
             return new MovieDetailsConverter(tmdbServiceManager.getConfiguration()).convert(apiMovieDetails);
         } catch (TmdbServiceException e) {
             throw new MovieServiceException(e.getMessage(), e);
         }
     }
 
+    private static String buildImageUrl(TmdbConfiguration configuration, String size, String path) {
+        if (path == null || path.isEmpty()) {
+            return null;
+        } else {
+            return configuration.getImages().getBaseUrl() + size + path;
+        }
+    }
+
+    private static String buildPosterSearchResultUrl(TmdbConfiguration configuration, String posterPath) {
+        return buildImageUrl(configuration, configuration.getImages().getPosterSizes().get(2), posterPath);
+    }
+
     private static String buildPosterUrl(TmdbConfiguration configuration, String posterPath) {
-        return configuration.getImages().getBaseUrl() + configuration.getImages().getPosterSizes().get(2) + posterPath;
+        return buildImageUrl(configuration, configuration.getImages().getPosterSizes().get(3), posterPath);
     }
 
     private static String buildBackdropUrl(TmdbConfiguration configuration, String backdropPath) {
-        return configuration.getImages().getBaseUrl() + configuration.getImages().getBackdropSizes().get(2) + backdropPath;
+        return buildImageUrl(configuration, configuration.getImages().getBackdropSizes().get(2), backdropPath);
     }
 
     private static String buildProfileImageUrl(TmdbConfiguration configuration, String profilePath) {
-        return configuration.getImages().getBaseUrl() + configuration.getImages().getProfileSizes().get(2) + profilePath;
+        return buildImageUrl(configuration, configuration.getImages().getProfileSizes().get(2), profilePath);
     }
 
     private static class MovieConverter implements Converter<TmdbMovie,Movie> {
@@ -70,7 +100,7 @@ public class MovieService {
         @Override
         public Movie convert(TmdbMovie apiMovie) {
             return new Movie(apiMovie.getId(), apiMovie.getTitle(), apiMovie.getReleaseDate(), apiMovie.getOverview(),
-                    buildPosterUrl(tmdbConfiguration, apiMovie.getPosterPath()));
+                    buildPosterSearchResultUrl(tmdbConfiguration, apiMovie.getPosterPath()));
         }
     }
 
