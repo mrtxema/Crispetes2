@@ -1,7 +1,5 @@
 package cat.mrtxema.crispetes.api.tmdb;
 
-import android.util.Log;
-
 import org.androidannotations.annotations.EBean;
 import java.io.IOException;
 import cat.mrtxema.crispetes.api.JsonParserFactory;

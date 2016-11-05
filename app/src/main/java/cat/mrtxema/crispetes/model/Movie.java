@@ -1,24 +1,28 @@
 package cat.mrtxema.crispetes.model;
 
+import org.parceler.Parcel;
+import org.parceler.ParcelConstructor;
 import java.util.Date;
 
+@Parcel(Parcel.Serialization.BEAN)
 public class Movie {
-    private final int id;
+    private final int tmdbId;
     private final String title;
     private final Date releaseDate;
     private final String overview;
     private final String posterUrl;
 
-    public Movie(int id, String title, Date releaseDate, String overview, String posterUrl) {
-        this.id = id;
+    @ParcelConstructor
+    public Movie(int tmdbId, String title, Date releaseDate, String overview, String posterUrl) {
+        this.tmdbId = tmdbId;
         this.title = title;
         this.releaseDate = releaseDate;
         this.overview = overview;
         this.posterUrl = posterUrl;
     }
 
-    public int getId() {
-        return id;
+    public int getTmdbId() {
+        return tmdbId;
     }
 
     public String getTitle() {
@@ -40,7 +44,7 @@ public class Movie {
     @Override
     public String toString() {
         return "Movie{" +
-                "id=" + id +
+                "tmdbId=" + tmdbId +
                 ", title='" + title + '\'' +
                 ", releaseDate=" + releaseDate +
                 ", overview='" + overview + '\'' +

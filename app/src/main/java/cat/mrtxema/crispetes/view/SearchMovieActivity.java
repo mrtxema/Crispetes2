@@ -66,8 +66,11 @@ public class SearchMovieActivity extends BaseActivity {
     @EditorAction(R.id.txtMovie)
     boolean onSearchClick(int actionId) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            hideKeyboard();
-            performMovieSearch(txtMovie.getText().toString());
+            final String searchString = txtMovie.getText().toString().trim();
+            if (!searchString.isEmpty()) {
+                hideKeyboard();
+                performMovieSearch(searchString);
+            }
             return true;
         }
         return false;
@@ -123,6 +126,6 @@ public class SearchMovieActivity extends BaseActivity {
 
     @ItemClick(R.id.lstMovies)
     void onMovieClick(Movie movie) {
-        MovieInfoActivity_.intent(this).movieId(movie.getId()).start();
+        MovieInfoActivity_.intent(this).movie(movie).start();
     }
 }

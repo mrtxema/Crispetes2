@@ -20,7 +20,10 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
+import cat.mrtxema.crispetes.model.FavoriteMovie;
+import cat.mrtxema.crispetes.model.Movie;
 import cat.mrtxema.crispetes.model.MovieDetails;
+import cat.mrtxema.crispetes.service.FavoriteMovieService;
 import cat.mrtxema.crispetes.service.MovieService;
 import cat.mrtxema.crispetes.service.MovieServiceException;
 import cat.mrtxema.crispetes.view.adapter.CastListAdapter;
@@ -33,8 +36,10 @@ import cat.mrtxema.crispetes.view.util.ViewUtils;
 public class MovieInfoActivity extends BaseActivity {
     @Bean
     MovieService movieService;
+    @Bean
+    FavoriteMovieService favoriteMovieService;
     @Extra
-    Integer movieId;
+    Movie movie;
     private MovieDetails movieDetails;
 
     @ViewById
@@ -71,13 +76,13 @@ public class MovieInfoActivity extends BaseActivity {
 
     @AfterViews
     protected void initViews() {
-        retrieveMovieDetails(movieId);
+        retrieveMovieDetails(movie.getTmdbId());
     }
 
     @Background
-    void retrieveMovieDetails(int movieId) {
+    void retrieveMovieDetails(int tmdbId) {
         try {
-            movieDetails = movieService.getMovieDetails(movieId);
+            movieDetails = movieService.getMovieDetails(tmdbId);
             showMovieDetails(movieDetails);
         } catch (MovieServiceException e) {
             Log.e(getClass().getSimpleName(), "Error retrieving movie details", e);
@@ -110,6 +115,16 @@ public class MovieInfoActivity extends BaseActivity {
 
     private boolean isNull(Integer n) {
         return n == null || n == 0;
+    }
+
+    @Click(R.id.btnFavorite)
+    void onFavoriteClick() {
+        saveFavoriteMovie();
+    }
+
+    @Background
+    void saveFavoriteMovie() {
+        favoriteMovieService.save(new FavoriteMovie(movie));
     }
 
     @Click(R.id.imgPoster)

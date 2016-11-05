@@ -14,7 +14,16 @@
     tools:showIn="@layout/activity_main">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="[Aquí va la lista de pelis guardadas]" />
+        android:id="@+id/txtNoResults"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/noresults"
+        android:visibility="gone"
+        android:gravity="center_vertical|center" />
+
+    <ListView
+        android:id="@+id/lstFavoriteMovies"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </RelativeLayout>

@@ -1,0 +1,32 @@
+#
+# generated on 2016/11/05 10:26:09
+#
+# --table-start--
+dataClass=cat.mrtxema.crispetes.store.FavoriteMovieDto
+tableName=movies
+# --table-fields-start--
+# --field-start--
+fieldName=id
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=tmdbId
+# --field-end--
+# --field-start--
+fieldName=title
+# --field-end--
+# --field-start--
+fieldName=releaseDate
+# --field-end--
+# --field-start--
+fieldName=overview
+# --field-end--
+# --field-start--
+fieldName=posterUrl
+# --field-end--
+# --field-start--
+fieldName=status
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################

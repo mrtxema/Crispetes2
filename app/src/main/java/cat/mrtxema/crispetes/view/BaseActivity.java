@@ -50,4 +50,9 @@ public abstract class BaseActivity extends AppCompatActivity {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
+
+    protected void setViewVisibility(View primaryView, View secondaryView, boolean showPrimary) {
+        primaryView.setVisibility(showPrimary ? View.VISIBLE : View.GONE);
+        secondaryView.setVisibility(showPrimary ? View.GONE : View.VISIBLE);
+    }
 }
