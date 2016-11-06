@@ -1,8 +1,15 @@
 package cat.mrtxema.crispetes.view;
 
+import android.support.design.widget.TabLayout;
+import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
-
+import java.util.List;
+import cat.mrtxema.crispetes.model.WatchStatus;
+import cat.mrtxema.crispetes.service.FavoriteMovieServiceException;
+import cat.mrtxema.crispetes.model.FavoriteMovie;
+import cat.mrtxema.crispetes.service.FavoriteMovieService;
+import cat.mrtxema.crispetes.view.adapter.FavoriteMovieListAdapter;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
@@ -12,15 +19,6 @@ import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
-import java.util.List;
-
-import cat.mrtxema.crispetes.model.FavoriteMovie;
-import cat.mrtxema.crispetes.model.Movie;
-import cat.mrtxema.crispetes.service.FavoriteMovieService;
-import cat.mrtxema.crispetes.service.converter.Converter;
-import cat.mrtxema.crispetes.service.converter.ListConverter;
-import cat.mrtxema.crispetes.view.adapter.MovieListAdapter;
-
 @EActivity(R.layout.activity_main)
 public class MainActivity extends BaseActivity {
     @Bean
@@ -29,12 +27,36 @@ public class MainActivity extends BaseActivity {
     ListView lstFavoriteMovies;
     @ViewById(R.id.txtNoResults)
     TextView txtNoResults;
-    private MovieListAdapter movieListAdapter;
+    @ViewById(R.id.tabs)
+    TabLayout tabLayout;
+    private FavoriteMovieListAdapter movieListAdapter;
 
+    @Override
     protected boolean isMainActivity() {
         return true;
     }
 
+    @AfterViews
+    void initTabs() {
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.pending).setTag(WatchStatus.PENDING));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.watched).setTag(WatchStatus.WATCHED));
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                retrieveFavoriteMovies();
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         retrieveFavoriteMovies();
@@ -42,21 +64,20 @@ public class MainActivity extends BaseActivity {
 
     @Background
     void retrieveFavoriteMovies() {
-        List<FavoriteMovie> favoriteMovies = favoriteMovieService.retrieveAll();
-        List<Movie> movies = new ListConverter<>(new Converter<FavoriteMovie, Movie>() {
-            @Override
-            public Movie convert(FavoriteMovie favoriteMovie) {
-                return favoriteMovie.getMovie();
-            }
-        }).convert(favoriteMovies);
-        showFavoriteMovies(movies);
+        try {
+            WatchStatus status = WatchStatus.class.cast(tabLayout.getTabAt(tabLayout.getSelectedTabPosition()).getTag());
+            List<FavoriteMovie> favoriteMovies = favoriteMovieService.retrieveByStatus(status);
+            showFavoriteMovies(favoriteMovies);
+        } catch (FavoriteMovieServiceException e) {
+            Log.e(getClass().getSimpleName(), "Error retrieving favorite movies", e);
+        }
     }
 
     @UiThread
-    void showFavoriteMovies(List<Movie> movies) {
-        movieListAdapter = new MovieListAdapter(this, movies);
+    void showFavoriteMovies(List<FavoriteMovie> favoriteMovies) {
+        movieListAdapter = new FavoriteMovieListAdapter(this, favoriteMovies);
         lstFavoriteMovies.setAdapter(movieListAdapter);
-        setViewVisibility(lstFavoriteMovies, txtNoResults, !movies.isEmpty());
+        setViewVisibility(lstFavoriteMovies, txtNoResults, !favoriteMovies.isEmpty());
     }
 
     @Click(R.id.btnAdd)
@@ -65,7 +86,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @ItemClick(R.id.lstFavoriteMovies)
-    void onMovieClick(Movie movie) {
-        MovieInfoActivity_.intent(this).movie(movie).start();
+    void onMovieClick(FavoriteMovie favoriteMovie) {
+        MovieInfoActivity_.intent(this).favoriteMovie(favoriteMovie).start();
     }
 }

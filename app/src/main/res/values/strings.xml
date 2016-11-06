@@ -19,4 +19,11 @@
     <string name="n_minutes">%d minutos</string>
     <string name="videos">Videos</string>
     <string name="search_a_movie">Busca una película</string>
+    <string name="title_movie_search">Buscar</string>
+    <string name="title_movie_info">Película</string>
+    <string name="movie_saved">Añadida a la lista de películas pendientes</string>
+    <string name="movie_watched">Movida a la lista de películas vistas</string>
+    <string name="movie_deleted">Se ha eliminado la película</string>
+    <string name="pending">Pendientes</string>
+    <string name="watched">Vistas</string>
 </resources>

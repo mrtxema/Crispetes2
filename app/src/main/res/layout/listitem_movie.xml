@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -22,7 +23,14 @@
     </LinearLayout>
 
     <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="0.8" android:orientation="vertical">
-        <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:flexWrap="wrap"
+            app:justifyContent="space_between"
+            >
+
             <TextView
                 android:id="@+id/txtTitle"
                 android:layout_width="wrap_content"
@@ -30,14 +38,16 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 />
+
             <TextView
                 android:id="@+id/txtRelease"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
-                android:layout_marginStart="10dp"
                 />
-        </LinearLayout>
+
+        </com.google.android.flexbox.FlexboxLayout>
+
         <TextView
             android:id="@+id/txtOverview"
             android:layout_width="wrap_content"

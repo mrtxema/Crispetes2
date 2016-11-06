@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import cat.mrtxema.crispetes.model.FavoriteMovie;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
@@ -126,6 +127,6 @@ public class SearchMovieActivity extends BaseActivity {
 
     @ItemClick(R.id.lstMovies)
     void onMovieClick(Movie movie) {
-        MovieInfoActivity_.intent(this).movie(movie).start();
+        MovieInfoActivity_.intent(this).favoriteMovie(new FavoriteMovie(movie)).start();
     }
 }

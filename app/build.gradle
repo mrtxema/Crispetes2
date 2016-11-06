@@ -41,7 +41,7 @@ ext {
 dependencies {
     annotationProcessor group:'org.androidannotations', name:'androidannotations', version:aa_version
     annotationProcessor group:'org.androidannotations', name:'ormlite', version:aa_version
-    annotationProcessor group: 'org.parceler', name: 'parceler', version: parceler_version
+    annotationProcessor group:'org.parceler', name:'parceler', version:parceler_version
 
     compile group:'com.android.support', name:'appcompat-v7', version:android_version
     compile group:'com.android.support', name:'design', version:android_version
@@ -53,5 +53,6 @@ dependencies {
     compile group:'com.squareup.retrofit2', name:'converter-gson', version:retrofit_version
     compile group:'com.squareup.picasso', name:'picasso', version:'2.5.2'
     compile group:'com.github.aakira', name:'expandable-layout', version:'1.6.0', ext:'aar'
-    compile group: 'org.parceler', name: 'parceler-api', version: parceler_version
+    compile group:'org.parceler', name:'parceler-api', version:parceler_version
+    compile group:'com.google.android', name:'flexbox', version:'0.2.3'
 }

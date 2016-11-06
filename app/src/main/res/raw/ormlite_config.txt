@@ -1,5 +1,5 @@
 #
-# generated on 2016/11/05 10:26:09
+# generated on 2016/11/06 06:25:05
 #
 # --table-start--
 dataClass=cat.mrtxema.crispetes.store.FavoriteMovieDto
@@ -7,25 +7,38 @@ tableName=movies
 # --table-fields-start--
 # --field-start--
 fieldName=id
+columnName=id
+canBeNull=false
 generatedId=true
 # --field-end--
 # --field-start--
 fieldName=tmdbId
+columnName=tmdbId
+canBeNull=false
+indexName=movies_tmdbId_idx
 # --field-end--
 # --field-start--
 fieldName=title
+columnName=title
+canBeNull=false
 # --field-end--
 # --field-start--
 fieldName=releaseDate
+columnName=releaseDate
 # --field-end--
 # --field-start--
 fieldName=overview
+columnName=overview
 # --field-end--
 # --field-start--
 fieldName=posterUrl
+columnName=posterUrl
 # --field-end--
 # --field-start--
 fieldName=status
+columnName=status
+canBeNull=false
+indexName=movies_status_idx
 # --field-end--
 # --table-fields-end--
 # --table-end--

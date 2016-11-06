@@ -14,7 +14,7 @@ import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
 
 @EActivity
-@OptionsMenu(R.menu.menu_sample)
+//@OptionsMenu(R.menu.menu_sample)
 public abstract class BaseActivity extends AppCompatActivity {
     @ViewById(R.id.toolbar)
     Toolbar toolbar;
@@ -32,11 +32,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         return false;
     }
 
+    /*
     @OptionsItem(R.id.action_settings)
     void showSettings() {
         View view = getWindow().getDecorView();
         Snackbar.make(view, "Settings clicked", Snackbar.LENGTH_LONG).setAction("Click", null).show();
     }
+    */
 
     @OptionsItem(android.R.id.home)
     void goBack() {
@@ -51,8 +53,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected void setViewVisibility(View primaryView, View secondaryView, boolean showPrimary) {
-        primaryView.setVisibility(showPrimary ? View.VISIBLE : View.GONE);
-        secondaryView.setVisibility(showPrimary ? View.GONE : View.VISIBLE);
+    protected void setViewVisibility(View primaryView, boolean visible) {
+        primaryView.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
+    protected void setViewVisibility(View primaryView, View alternativeView, boolean showPrimary) {
+        setViewVisibility(primaryView, showPrimary);
+        setViewVisibility(alternativeView, !showPrimary);
     }
 }
