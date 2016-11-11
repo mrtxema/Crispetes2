@@ -26,4 +26,7 @@
     <string name="movie_deleted">Se ha eliminado la película</string>
     <string name="pending">Pendientes</string>
     <string name="watched">Vistas</string>
+    <string name="tab_datasheet">Ficha</string>
+    <string name="tab_cast">Reparto</string>
+    <string name="tab_videos">Videos</string>
 </resources>

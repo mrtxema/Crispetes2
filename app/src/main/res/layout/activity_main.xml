@@ -10,7 +10,7 @@
 
     <include layout="@layout/content_toolbar" />
 
-    <include layout="@layout/content_sample" />
+    <include layout="@layout/content_main" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btnAdd"

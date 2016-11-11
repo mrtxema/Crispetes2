@@ -14,7 +14,7 @@ import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
 
 @EActivity
-//@OptionsMenu(R.menu.menu_sample)
+@OptionsMenu(R.menu.menu)
 public abstract class BaseActivity extends AppCompatActivity {
     @ViewById(R.id.toolbar)
     Toolbar toolbar;
@@ -32,13 +32,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         return false;
     }
 
-    /*
     @OptionsItem(R.id.action_settings)
     void showSettings() {
         View view = getWindow().getDecorView();
         Snackbar.make(view, "Settings clicked", Snackbar.LENGTH_LONG).setAction("Click", null).show();
     }
-    */
 
     @OptionsItem(android.R.id.home)
     void goBack() {

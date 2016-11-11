@@ -1,12 +1,9 @@
 package cat.mrtxema.crispetes.view.util;
 
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Adapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 
 public class ViewUtils {
     public static void setTextOrHideParent(TextView textView, String s) {
@@ -30,13 +27,12 @@ public class ViewUtils {
         return s == null || s.isEmpty();
     }
 
-    public static void setAdapter(ExpandableLinearLayout layout, Adapter adapter) {
+    public static void setAdapter(ViewGroup layout, Adapter adapter) {
         if (adapter.getCount() > 0) {
             layout.removeAllViews();
             for (int i = 0; i < adapter.getCount(); i++) {
                 layout.addView(adapter.getView(i, null, layout));
             }
-            layout.initLayout();
         }
     }
 
