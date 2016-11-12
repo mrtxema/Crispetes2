@@ -1,6 +1,9 @@
 package cat.mrtxema.crispetes.view;
 
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -10,6 +13,7 @@ import cat.mrtxema.crispetes.service.FavoriteMovieServiceException;
 import cat.mrtxema.crispetes.model.FavoriteMovie;
 import cat.mrtxema.crispetes.service.FavoriteMovieService;
 import cat.mrtxema.crispetes.view.adapter.FavoriteMovieListAdapter;
+import cat.mrtxema.crispetes.view.adapter.ViewPagerAdapter;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
@@ -21,15 +25,10 @@ import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends BaseActivity {
-    @Bean
-    FavoriteMovieService favoriteMovieService;
-    @ViewById(R.id.lstFavoriteMovies)
-    ListView lstFavoriteMovies;
-    @ViewById(R.id.txtNoResults)
-    TextView txtNoResults;
     @ViewById(R.id.tabs)
     TabLayout tabLayout;
-    private FavoriteMovieListAdapter movieListAdapter;
+    @ViewById(R.id.viewpager)
+    ViewPager viewPager;
 
     @Override
     protected boolean isMainActivity() {
@@ -38,55 +37,27 @@ public class MainActivity extends BaseActivity {
 
     @AfterViews
     void initTabs() {
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.pending).setTag(WatchStatus.PENDING));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.watched).setTag(WatchStatus.WATCHED));
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                retrieveFavoriteMovies();
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
-        });
+        setupViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        retrieveFavoriteMovies();
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(buildFavoriteMovieFragment_(WatchStatus.PENDING), getString(R.string.pending));
+        adapter.addFragment(buildFavoriteMovieFragment_(WatchStatus.WATCHED), getString(R.string.watched));
+        viewPager.setAdapter(adapter);
     }
 
-    @Background
-    void retrieveFavoriteMovies() {
-        try {
-            WatchStatus status = WatchStatus.class.cast(tabLayout.getTabAt(tabLayout.getSelectedTabPosition()).getTag());
-            List<FavoriteMovie> favoriteMovies = favoriteMovieService.retrieveByStatus(status);
-            showFavoriteMovies(favoriteMovies);
-        } catch (FavoriteMovieServiceException e) {
-            Log.e(getClass().getSimpleName(), "Error retrieving favorite movies", e);
-        }
-    }
-
-    @UiThread
-    void showFavoriteMovies(List<FavoriteMovie> favoriteMovies) {
-        movieListAdapter = new FavoriteMovieListAdapter(this, favoriteMovies);
-        lstFavoriteMovies.setAdapter(movieListAdapter);
-        setViewVisibility(lstFavoriteMovies, txtNoResults, !favoriteMovies.isEmpty());
+    private Fragment buildFavoriteMovieFragment_(WatchStatus watchStatus) {
+        Fragment result = new FavoriteMovieFragment_();
+        Bundle arguments = new Bundle();
+        arguments.putString("watchStatus", watchStatus.name());
+        result.setArguments(arguments);
+        return result;
     }
 
     @Click(R.id.btnAdd)
     void onClickAdd() {
         SearchMovieActivity_.intent(this).start();
-    }
-
-    @ItemClick(R.id.lstFavoriteMovies)
-    void onMovieClick(FavoriteMovie favoriteMovie) {
-        MovieInfoActivity_.intent(this).favoriteMovie(favoriteMovie).start();
     }
 }

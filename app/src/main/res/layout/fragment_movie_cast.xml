@@ -17,12 +17,13 @@
             android:layout_height="wrap_content"
             android:text="@string/cast"
             android:textStyle="bold"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
 
         <LinearLayout
             android:id="@+id/layoutCast"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:orientation="vertical">
 
             <TextView
@@ -38,13 +39,14 @@
             android:layout_height="wrap_content"
             android:text="@string/crew"
             android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginTop="20dp" />
+            android:textSize="18sp"
+            android:layout_marginTop="10dp" />
 
         <LinearLayout
             android:id="@+id/layoutCrew"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:orientation="vertical">
 
             <TextView

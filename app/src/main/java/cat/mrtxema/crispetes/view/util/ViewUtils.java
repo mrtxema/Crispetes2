@@ -1,7 +1,9 @@
 package cat.mrtxema.crispetes.view.util;
 
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Adapter;
 import android.widget.TextView;
 
@@ -38,5 +40,14 @@ public class ViewUtils {
 
     public static void showOrHide(View viewToHide, String value) {
         viewToHide.setVisibility(isEmpty(value) ? View.GONE : View.VISIBLE);
+    }
+
+    public static void setViewVisibility(View primaryView, boolean visible) {
+        primaryView.setVisibility(visible ? View.VISIBLE : View.GONE);
+    }
+
+    public static void setViewVisibility(View primaryView, View alternativeView, boolean showPrimary) {
+        setViewVisibility(primaryView, showPrimary);
+        setViewVisibility(alternativeView, !showPrimary);
     }
 }

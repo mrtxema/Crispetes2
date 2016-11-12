@@ -10,6 +10,7 @@ import cat.mrtxema.crispetes.model.WatchStatus;
 import cat.mrtxema.crispetes.service.FavoriteMovieServiceException;
 
 import cat.mrtxema.crispetes.view.adapter.ViewPagerAdapter;
+import cat.mrtxema.crispetes.view.util.ViewUtils;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
@@ -51,6 +52,7 @@ public class MovieInfoActivity extends BaseActivity {
 
     @AfterViews
     protected void initViews() {
+        setTitle(favoriteMovie.getMovie().getTitle());
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
         initButtons();
@@ -66,9 +68,9 @@ public class MovieInfoActivity extends BaseActivity {
 
     @UiThread
     void initButtons() {
-        setViewVisibility(btnFavorite, favoriteMovie.getStatus() == WatchStatus.UNSAVED);
-        setViewVisibility(btnSeen, favoriteMovie.getStatus() == WatchStatus.PENDING);
-        setViewVisibility(btnDelete, favoriteMovie.getStatus() == WatchStatus.WATCHED);
+        ViewUtils.setViewVisibility(btnFavorite, favoriteMovie.getStatus() == WatchStatus.UNSAVED);
+        ViewUtils.setViewVisibility(btnSeen, favoriteMovie.getStatus() == WatchStatus.PENDING);
+        ViewUtils.setViewVisibility(btnDelete, favoriteMovie.getStatus() == WatchStatus.WATCHED);
     }
 
     @SupposeBackground

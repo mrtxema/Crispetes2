@@ -10,18 +10,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".MainActivity_" android:label="@string/app_name" android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".SplashActivity_" android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <activity android:name=".MainActivity_" android:label="@string/app_name" android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name=".SearchMovieActivity_" android:label="@string/title_movie_search" android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".MovieInfoActivity_" android:label="@string/title_movie_info" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".MovieInfoActivity_" android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".ImageActivity_" android:label="@string/app_name" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ImageActivity_" android:theme="@style/AppTheme.NoActionBar" />
 
     </application>
 

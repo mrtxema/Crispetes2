@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient"
+    tools:context="cat.mrtxema.crispetes.view.ImageActivity">
 
     <ImageView
         android:id="@+id/image"
@@ -10,17 +15,12 @@
         android:layout_height="fill_parent"
         android:scaleType="fitCenter" />
 
-    <ImageView
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/btnClose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:padding="2dp"
-        android:background="@color/colorAccent"
-        android:src="@android:drawable/ic_menu_close_clear_cancel"
-        android:layout_gravity="end" />
-
-</RelativeLayout>
+        android:layout_gravity="top|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_clear_white_24dp" />
+    
+</android.support.design.widget.CoordinatorLayout>
