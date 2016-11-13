@@ -1,9 +1,9 @@
-package cat.mrtxema.crispetes.api.tmdb;
+package cat.mrtxema.crispetes.api.tmdb.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class TmdbLanguage {
-    @SerializedName("iso_639_1")
+public class TmdbCountry {
+    @SerializedName("iso_3166_1")
     private String isoCode;
     private String name;
 

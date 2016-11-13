@@ -1,4 +1,4 @@
-package cat.mrtxema.crispetes.api.tmdb;
+package cat.mrtxema.crispetes.api.tmdb.model;
 
 public class TmdbCrew extends TmdbCreditItem {
     private String department;

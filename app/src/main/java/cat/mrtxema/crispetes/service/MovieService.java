@@ -1,21 +1,22 @@
 package cat.mrtxema.crispetes.service;
 
+import cat.mrtxema.crispetes.api.tmdb.TmdbServiceRemoteException;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 
 import java.util.List;
 import java.util.Locale;
 
-import cat.mrtxema.crispetes.api.tmdb.SearchMoviesResponse;
-import cat.mrtxema.crispetes.api.tmdb.TmdbCast;
-import cat.mrtxema.crispetes.api.tmdb.TmdbCompany;
-import cat.mrtxema.crispetes.api.tmdb.TmdbConfiguration;
-import cat.mrtxema.crispetes.api.tmdb.TmdbCountry;
-import cat.mrtxema.crispetes.api.tmdb.TmdbCrew;
-import cat.mrtxema.crispetes.api.tmdb.TmdbGenre;
-import cat.mrtxema.crispetes.api.tmdb.TmdbLanguage;
-import cat.mrtxema.crispetes.api.tmdb.TmdbMovie;
-import cat.mrtxema.crispetes.api.tmdb.TmdbMovieDetails;
+import cat.mrtxema.crispetes.api.tmdb.model.SearchMoviesResponse;
+import cat.mrtxema.crispetes.api.tmdb.model.TmdbCast;
+import cat.mrtxema.crispetes.api.tmdb.model.TmdbCompany;
+import cat.mrtxema.crispetes.api.tmdb.model.TmdbConfiguration;
+import cat.mrtxema.crispetes.api.tmdb.model.TmdbCountry;
+import cat.mrtxema.crispetes.api.tmdb.model.TmdbCrew;
+import cat.mrtxema.crispetes.api.tmdb.model.TmdbGenre;
+import cat.mrtxema.crispetes.api.tmdb.model.TmdbLanguage;
+import cat.mrtxema.crispetes.api.tmdb.model.TmdbMovie;
+import cat.mrtxema.crispetes.api.tmdb.model.TmdbMovieDetails;
 import cat.mrtxema.crispetes.api.tmdb.TmdbServiceException;
 import cat.mrtxema.crispetes.api.tmdb.TmdbServiceManager;
 import cat.mrtxema.crispetes.model.Cast;
@@ -54,6 +55,8 @@ public class MovieService {
             return new SearchResponse<>(response.getPage(), response.getTotalResults(), response.getTotalPages(), movies);
         } catch (TmdbServiceException e) {
             throw new MovieServiceException(e.getMessage(), e);
+        } catch (TmdbServiceRemoteException e) {
+            throw new MovieServiceException(e.getMessage(), e);
         }
     }
 
@@ -62,6 +65,8 @@ public class MovieService {
             TmdbMovieDetails apiMovieDetails = tmdbServiceManager.getMovieDetails(id, DEVICE_LANGUAGE);
             return new MovieDetailsConverter(tmdbServiceManager.getConfiguration()).convert(apiMovieDetails);
         } catch (TmdbServiceException e) {
+            throw new MovieServiceException(e.getMessage(), e);
+        } catch (TmdbServiceRemoteException e) {
             throw new MovieServiceException(e.getMessage(), e);
         }
     }
