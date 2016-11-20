@@ -11,4 +11,8 @@ public class PluginVideoServiceException extends ExternalServiceException {
     public PluginVideoServiceException(String msg, Throwable parent) {
         super(msg, parent);
     }
+
+    public boolean isAuthenticationError() {
+        return false;
+    }
 }

@@ -2,7 +2,7 @@ package cat.mrtxema.crispetes.api.videos;
 
 import cat.mrtxema.crispetes.api.videos.model.PluginLoginRequest;
 import cat.mrtxema.crispetes.api.videos.model.PluginLoginResponse;
-import cat.mrtxema.crispetes.api.videos.model.PluginMovieLinkList;
+import cat.mrtxema.crispetes.api.videos.model.PluginVideoLinkList;
 import cat.mrtxema.crispetes.api.videos.model.PluginNavigationRequest;
 import cat.mrtxema.crispetes.api.videos.model.PluginNavigationResponse;
 import cat.mrtxema.crispetes.api.videos.model.PluginVideoSourceDescriptor;
@@ -23,10 +23,15 @@ public interface PluginVideoService {
     Call<PluginLoginResponse> login(@Body PluginLoginRequest loginRequest);
 
     @GET("movie/{tmdbId}")
-    Call<PluginMovieLinkList> getMovieLinks(@Path("tmdbId") int tmdbId, @Query("token") String token, @Query("imdbId") String imdbId, @Query("language") String language);
+    Call<PluginVideoLinkList> getMovieLinks(@Path("tmdbId") int tmdbId, @Query("token") String token, @Query("imdbId") String imdbId, @Query("language") String language);
 
-    @GET("movie/{tmdbId}/{linkId}")
-    Call<PluginVideoUrl> getVideoUrl(@Path("tmdbId") int tmdbId, @Path("linkId") String linkId, @Query("token") String token, @Query("imdbId") String imdbId);
+    @GET("tvshow/{tmdbId}/{season}/{episode}")
+    Call<PluginVideoLinkList> getEpisodeLinks(
+            @Path("tmdbId") int tmdbId, @Path("season") int season, @Path("episode") int episode,
+            @Query("token") String token, @Query("imdbId") String imdbId, @Query("language") String language);
+
+    @GET("link/{linkId}")
+    Call<PluginVideoUrl> getVideoUrl(@Path("linkId") String linkId, @Query("token") String token);
 
     @POST("navigate")
     Call<PluginNavigationResponse> navigate(@Body PluginNavigationRequest navigationRequest);

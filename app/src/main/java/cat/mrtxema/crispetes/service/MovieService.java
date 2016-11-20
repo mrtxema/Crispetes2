@@ -23,34 +23,19 @@ import cat.mrtxema.crispetes.model.Cast;
 import cat.mrtxema.crispetes.model.Crew;
 import cat.mrtxema.crispetes.model.Movie;
 import cat.mrtxema.crispetes.model.MovieDetails;
-import cat.mrtxema.crispetes.model.MovieDetailsBuilder;
 import cat.mrtxema.crispetes.model.SearchResponse;
 import cat.mrtxema.crispetes.service.converter.Converter;
 import cat.mrtxema.crispetes.service.converter.ListConverter;
 
 @EBean
 public class MovieService {
-    private static final String DEVICE_LANGUAGE = getDeviceLanguage();
+    private static final Locale DEVICE_LOCALE = Locale.getDefault();
     @Bean
     TmdbServiceManager tmdbServiceManager;
 
-    private static String getDeviceLanguage() {
-        Locale deviceLocale = Locale.getDefault();
-        String language = deviceLocale.getLanguage();
-        String country = deviceLocale.getCountry();
-        if (language.equals("ca")) {
-            // There's almost no catalan content in TMDB
-            return "es-ES";
-        } else if (country == null || country.isEmpty()) {
-            return language;
-        } else {
-            return String.format("%s-%s", language, country);
-        }
-    }
-
     public SearchResponse<Movie> search(String title, int page) throws MovieServiceException {
         try {
-            SearchMoviesResponse response = tmdbServiceManager.searchMovies(title, DEVICE_LANGUAGE, page);
+            SearchMoviesResponse response = tmdbServiceManager.searchMovies(title, DEVICE_LOCALE, page);
             List<Movie> movies = new ListConverter<>(new MovieConverter(tmdbServiceManager.getConfiguration())).convert(response.getResults());
             return new SearchResponse<>(response.getPage(), response.getTotalResults(), response.getTotalPages(), movies);
         } catch (TmdbServiceException e) {
@@ -62,7 +47,7 @@ public class MovieService {
 
     public MovieDetails getMovieDetails(int id) throws MovieServiceException {
         try {
-            TmdbMovieDetails apiMovieDetails = tmdbServiceManager.getMovieDetails(id, DEVICE_LANGUAGE);
+            TmdbMovieDetails apiMovieDetails = tmdbServiceManager.getMovieDetails(id, DEVICE_LOCALE);
             return new MovieDetailsConverter(tmdbServiceManager.getConfiguration()).convert(apiMovieDetails);
         } catch (TmdbServiceException e) {
             throw new MovieServiceException(e.getMessage(), e);
@@ -118,8 +103,8 @@ public class MovieService {
 
         @Override
         public MovieDetails convert(TmdbMovieDetails apiMovieDetails) {
-            return new MovieDetailsBuilder()
-                    .setId(apiMovieDetails.getId())
+            return MovieDetails.builder()
+                    .setTmdbId(apiMovieDetails.getId())
                     .setImdbId(apiMovieDetails.getImdbId())
                     .setTitle(apiMovieDetails.getTitle())
                     .setReleaseDate(apiMovieDetails.getReleaseDate())

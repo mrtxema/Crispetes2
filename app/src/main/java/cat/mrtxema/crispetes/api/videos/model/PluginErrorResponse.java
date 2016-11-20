@@ -1,18 +1,8 @@
 package cat.mrtxema.crispetes.api.videos.model;
 
 public class PluginErrorResponse {
-    private int code;
     private String message;
     private String stackTrace;
-
-    public int getCode() {
-        return code;
-    }
-
-    public PluginErrorResponse setCode(int code) {
-        this.code = code;
-        return this;
-    }
 
     public String getMessage() {
         return message;

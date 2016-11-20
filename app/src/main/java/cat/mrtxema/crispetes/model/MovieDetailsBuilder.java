@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 public class MovieDetailsBuilder {
-    Integer id;
+    Integer tmdbId;
     String imdbId;
     String title;
     Date releaseDate;
@@ -31,8 +31,8 @@ public class MovieDetailsBuilder {
     List<Cast> cast;
     List<Crew> crew;
 
-    public MovieDetailsBuilder setId(Integer id) {
-        this.id = id;
+    public MovieDetailsBuilder setTmdbId(Integer tmdbId) {
+        this.tmdbId = tmdbId;
         return this;
     }
 

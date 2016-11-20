@@ -1,52 +1,37 @@
 package cat.mrtxema.crispetes.api.videos;
 
-import java.io.IOException;
-import cat.mrtxema.crispetes.api.videos.model.PluginMovieLinkList;
+import java.util.Locale;
+import cat.mrtxema.crispetes.api.videos.model.PluginVideoLinkList;
 import cat.mrtxema.crispetes.api.videos.model.PluginNavigationRequest;
 import cat.mrtxema.crispetes.api.videos.model.PluginNavigationResponse;
-import cat.mrtxema.crispetes.api.videos.model.PluginVideoSourceDescriptor;
 import cat.mrtxema.crispetes.api.videos.model.PluginVideoUrl;
 
 public class PluginVideoServiceSession {
-    private final PluginVideoService pluginVideoService;
-    private final ResponseProcessor responseProcessor;
+    private final PluginVideoServiceClient client;
     private final String token;
 
-    public PluginVideoServiceSession(PluginVideoService pluginVideoService, ResponseProcessor responseProcessor, String token) {
-        this.pluginVideoService = pluginVideoService;
-        this.responseProcessor = responseProcessor;
+    public PluginVideoServiceSession(PluginVideoServiceClient client, String token) {
+        this.client = client;
         this.token = token;
     }
 
-    public PluginVideoSourceDescriptor getVideoSourceInfo() throws PluginVideoServiceException, PluginVideoServiceRemoteException {
-        try {
-            return responseProcessor.process(pluginVideoService.getVideoSourceInfo().execute());
-        } catch (IOException e) {
-            throw new PluginVideoServiceException("Error retrieving video source info", e);
-        }
+    private String getLanguageCode(Locale deviceLocale) {
+        return deviceLocale.toString();
     }
 
-    public PluginMovieLinkList getMovieLinks(int tmdbId, String imdbId, String language) throws PluginVideoServiceException, PluginVideoServiceRemoteException {
-        try {
-            return responseProcessor.process(pluginVideoService.getMovieLinks(tmdbId, token, imdbId, language).execute());
-        } catch (IOException e) {
-            throw new PluginVideoServiceException("Error retrieving movie links", e);
-        }
+    public PluginVideoLinkList getMovieLinks(int tmdbId, String imdbId, Locale locale) throws PluginVideoServiceException {
+        return client.processResponse(client.getService().getMovieLinks(tmdbId, token, imdbId, getLanguageCode(locale)));
     }
 
-    public PluginVideoUrl getVideoUrl(int tmdbId, String imdbId, String linkId) throws PluginVideoServiceException, PluginVideoServiceRemoteException {
-        try {
-            return responseProcessor.process(pluginVideoService.getVideoUrl(tmdbId, linkId, token, imdbId).execute());
-        } catch (IOException e) {
-            throw new PluginVideoServiceException("Error retrieving video url", e);
-        }
+    public PluginVideoLinkList getEpisodeLinks(int tmdbId, int season, int episode, String imdbId, Locale locale) throws PluginVideoServiceException {
+        return client.processResponse(client.getService().getEpisodeLinks(tmdbId, season, episode, token, imdbId, getLanguageCode(locale)));
     }
 
-    public PluginNavigationResponse navigate(PluginNavigationRequest navigationRequest) throws PluginVideoServiceException, PluginVideoServiceRemoteException {
-        try {
-            return responseProcessor.process(pluginVideoService.navigate(navigationRequest).execute());
-        } catch (IOException e) {
-            throw new PluginVideoServiceException("Error navigating to video", e);
-        }
+    public PluginVideoUrl getVideoUrl(int tmdbId, String imdbId, String linkId) throws PluginVideoServiceException {
+        return client.processResponse(client.getService().getVideoUrl(linkId, token));
+    }
+
+    public PluginNavigationResponse navigate(PluginNavigationRequest navigationRequest) throws PluginVideoServiceException {
+        return client.processResponse(client.getService().navigate(navigationRequest));
     }
 }

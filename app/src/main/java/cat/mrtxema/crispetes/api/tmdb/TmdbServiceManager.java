@@ -8,6 +8,7 @@ import okhttp3.ResponseBody;
 import org.androidannotations.annotations.EBean;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.util.Locale;
 import cat.mrtxema.crispetes.api.JsonParserFactory;
 import cat.mrtxema.crispetes.util.StringXor;
 import retrofit2.Converter;
@@ -53,17 +54,30 @@ public class TmdbServiceManager {
         }
     }
 
-    public SearchMoviesResponse searchMovies(String title, String language, int page) throws TmdbServiceException, TmdbServiceRemoteException {
+    private String getLanguageCode(Locale deviceLocale) {
+        String language = deviceLocale.getLanguage();
+        String country = deviceLocale.getCountry();
+        if (language.equals("ca")) {
+            // There's almost no catalan content in TMDB
+            return "es-ES";
+        } else if (country == null || country.isEmpty()) {
+            return language;
+        } else {
+            return String.format("%s-%s", language, country);
+        }
+    }
+
+    public SearchMoviesResponse searchMovies(String title, Locale locale, int page) throws TmdbServiceException, TmdbServiceRemoteException {
         try {
-            return responseProcessor.process(tmdbService.searchMovies(API_KEY, language, title, page).execute());
+            return responseProcessor.process(tmdbService.searchMovies(API_KEY, getLanguageCode(locale), title, page).execute());
         } catch (IOException e) {
             throw new TmdbServiceException("Error searching movies", e);
         }
     }
 
-    public TmdbMovieDetails getMovieDetails(int movieId, String language) throws TmdbServiceException, TmdbServiceRemoteException {
+    public TmdbMovieDetails getMovieDetails(int movieId, Locale locale) throws TmdbServiceException, TmdbServiceRemoteException {
         try {
-            return responseProcessor.process(tmdbService.getMovieDetails(movieId, API_KEY, language).execute());
+            return responseProcessor.process(tmdbService.getMovieDetails(movieId, API_KEY, getLanguageCode(locale)).execute());
         } catch (IOException e) {
             throw new TmdbServiceException("Error retrieving movie details", e);
         }

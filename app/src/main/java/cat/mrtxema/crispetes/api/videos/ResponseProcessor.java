@@ -13,13 +13,16 @@ public class ResponseProcessor {
         this.errorConverter = errorConverter;
     }
 
-    public <T> T process(Response<T> response) throws PluginVideoServiceException, PluginVideoServiceRemoteException {
+    public <T> T process(Response<T> response) throws PluginVideoServiceException {
         if (response.isSuccessful()) {
             return response.body();
         } else {
             try {
                 PluginErrorResponse errorResponse = errorConverter.convert(response.errorBody());
-                throw new PluginVideoServiceRemoteException(errorResponse.getCode(), errorResponse.getMessage());
+                if (response.code() == 401) {
+                    throw new PluginUnauthorizedException(errorResponse.getMessage());
+                }
+                throw new PluginVideoServiceException(errorResponse.getMessage());
             } catch (IOException e) {
                 throw new PluginVideoServiceException("Error processing error response", e);
             }

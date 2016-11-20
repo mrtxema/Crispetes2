@@ -16,6 +16,8 @@ public class VideoSourceDto implements Dto<VideoSource> {
     public static final String FIELD_BASE_URL = "base_url";
     public static final String FIELD_CODE = "code";
     public static final String FIELD_NAME = "name";
+    public static final String FIELD_SUPPORTS_MOVIES = "suuports_movies";
+    public static final String FIELD_SUPPORTS_TVSHOWS = "supports_tvshows";
 
     @DatabaseField(generatedId = true, canBeNull = false, columnName = FIELD_ID)
     private Integer id;
@@ -25,6 +27,10 @@ public class VideoSourceDto implements Dto<VideoSource> {
     private String code;
     @DatabaseField(canBeNull = false, columnName = FIELD_NAME)
     private String name;
+    @DatabaseField(canBeNull = false, columnName = FIELD_SUPPORTS_MOVIES)
+    private boolean supportsMovies;
+    @DatabaseField(canBeNull = false, columnName = FIELD_SUPPORTS_TVSHOWS)
+    private boolean supportsTvShows;
     @ForeignCollectionField(eager = true)
     Collection<CredentialParameterDto> credentials;
 
@@ -34,13 +40,15 @@ public class VideoSourceDto implements Dto<VideoSource> {
         baseUrl = videoSource.getBaseUrl();
         code = videoSource.getCode();
         name = videoSource.getName();
+        supportsMovies = videoSource.isSupportsMovies();
+        supportsTvShows = videoSource.isSupportsTvShows();
         credentials = convertCredentialsFromModel(videoSource.getCredentials());
         return this;
     }
 
     @Override
     public VideoSource toModel() {
-        return new VideoSource(id, baseUrl, code, name, convertCredentialsToModel(credentials));
+        return new VideoSource(id, baseUrl, code, name, supportsMovies, supportsTvShows, convertCredentialsToModel(credentials));
     }
 
     private Collection<CredentialParameterDto> convertCredentialsFromModel(Map<String, String> credentials) {
@@ -96,6 +104,24 @@ public class VideoSourceDto implements Dto<VideoSource> {
 
     public VideoSourceDto setName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public boolean isSupportsMovies() {
+        return supportsMovies;
+    }
+
+    public VideoSourceDto setSupportsMovies(boolean supportsMovies) {
+        this.supportsMovies = supportsMovies;
+        return this;
+    }
+
+    public boolean isSupportsTvShows() {
+        return supportsTvShows;
+    }
+
+    public VideoSourceDto setSupportsTvShows(boolean supportsTvShows) {
+        this.supportsTvShows = supportsTvShows;
         return this;
     }
 

@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 public class MovieDetails {
-    private final Integer id;
+    private final Integer tmdbId;
     private final String imdbId;
     private final String title;
     private final Date releaseDate;
@@ -33,7 +33,7 @@ public class MovieDetails {
     private final List<Crew> crewList;
 
     public MovieDetails(MovieDetailsBuilder builder) {
-        id = builder.id;
+        tmdbId = builder.tmdbId;
         imdbId = builder.imdbId;
         title = builder.title;
         releaseDate = builder.releaseDate;
@@ -60,8 +60,12 @@ public class MovieDetails {
         crewList = Collections.unmodifiableList(builder.crew);
     }
 
-    public Integer getId() {
-        return id;
+    public static MovieDetailsBuilder builder() {
+        return new MovieDetailsBuilder();
+    }
+
+    public Integer getTmdbId() {
+        return tmdbId;
     }
 
     public String getImdbId() {
@@ -163,7 +167,7 @@ public class MovieDetails {
     @Override
     public String toString() {
         return "MovieDetails{" +
-                "id=" + id +
+                "tmdbId=" + tmdbId +
                 ", imdbId='" + imdbId + '\'' +
                 ", title='" + title + '\'' +
                 ", releaseDate=" + releaseDate +

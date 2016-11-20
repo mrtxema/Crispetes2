@@ -10,7 +10,7 @@ public class DatabaseConfigUtil extends OrmLiteConfigUtil {
 
     public static void main(String[] args) throws Exception {
         System.out.printf("Running fom directory '%s'%n", new File(".").getAbsolutePath());
-        writeConfigFile("ormlite_config.txt", new Class[] { FavoriteMovieDto.class });
+        writeConfigFile("ormlite_config.txt", DtoRegistry.getDtoClassesAsArray());
     }
 
     public static void writeConfigFile(String fileName, Class<?>[] classes) throws SQLException, IOException {
@@ -24,5 +24,4 @@ public class DatabaseConfigUtil extends OrmLiteConfigUtil {
             writeConfigFile(configFile, classes);
         }
     }
-
 }
