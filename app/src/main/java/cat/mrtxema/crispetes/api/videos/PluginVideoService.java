@@ -17,7 +17,7 @@ import retrofit2.http.Query;
 public interface PluginVideoService {
 
     @GET
-    Call<PluginVideoSourceDescriptor> getVideoSourceInfo();
+    Call<PluginVideoSourceDescriptor> getVideoSourceInfo(@Query("language") String language);
 
     @POST("login")
     Call<PluginLoginResponse> login(@Body PluginLoginRequest loginRequest);

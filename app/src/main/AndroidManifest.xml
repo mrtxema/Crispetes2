@@ -25,6 +25,10 @@
 
         <activity android:name=".ImageActivity_" android:theme="@style/AppTheme.NoActionBar" />
 
+        <activity android:name=".VideoSourceListActivity_" android:label="@string/sources" android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name=".VideoSourceActivity_" android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>

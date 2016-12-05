@@ -28,4 +28,22 @@ public class Language {
     public String getCountryName() {
         return countryName;
     }
+
+    public String getDescription() {
+        StringBuffer result = new StringBuffer(getText(getLanguageName(), getLanguageCode()));
+        String country = getText(getCountryName(), getCountryCode());
+        if (country != null) {
+            if (result.length() > 0) {
+                result.append(' ');
+            }
+            result.append('(');
+            result.append(country);
+            result.append(')');
+        }
+        return result.toString();
+    }
+
+    private String getText(String name, String code) {
+        return name != null ? name : (code != null ? code : "");
+    }
 }

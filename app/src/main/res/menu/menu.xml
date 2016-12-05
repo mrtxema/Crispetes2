@@ -2,9 +2,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="cat.mrtxema.crispetes.view.MainActivity">
+
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/menu_sources"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/sources"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_about"
+        android:orderInCategory="110"
+        android:title="@string/about"
+        app:showAsAction="never" />
+
 </menu>

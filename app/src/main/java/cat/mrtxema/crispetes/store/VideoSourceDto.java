@@ -18,6 +18,7 @@ public class VideoSourceDto implements Dto<VideoSource> {
     public static final String FIELD_NAME = "name";
     public static final String FIELD_SUPPORTS_MOVIES = "suuports_movies";
     public static final String FIELD_SUPPORTS_TVSHOWS = "supports_tvshows";
+    public static final String FIELD_ORDER = "item_order";
 
     @DatabaseField(generatedId = true, canBeNull = false, columnName = FIELD_ID)
     private Integer id;
@@ -33,6 +34,8 @@ public class VideoSourceDto implements Dto<VideoSource> {
     private boolean supportsTvShows;
     @ForeignCollectionField(eager = true)
     Collection<CredentialParameterDto> credentials;
+    @DatabaseField(canBeNull = false, columnName = FIELD_ORDER)
+    private int order;
 
     @Override
     public VideoSourceDto fromModel(VideoSource videoSource) {
@@ -43,12 +46,22 @@ public class VideoSourceDto implements Dto<VideoSource> {
         supportsMovies = videoSource.isSupportsMovies();
         supportsTvShows = videoSource.isSupportsTvShows();
         credentials = convertCredentialsFromModel(videoSource.getCredentials());
+        order = videoSource.getOrder();
         return this;
     }
 
     @Override
     public VideoSource toModel() {
-        return new VideoSource(id, baseUrl, code, name, supportsMovies, supportsTvShows, convertCredentialsToModel(credentials));
+        return VideoSource.builder()
+                .setId(id)
+                .setBaseUrl(baseUrl)
+                .setCode(code)
+                .setName(name)
+                .setSupportsMovies(supportsMovies)
+                .setSupportsTvShows(supportsTvShows)
+                .setCredentials(convertCredentialsToModel(credentials))
+                .setOrder(order)
+                .build();
     }
 
     private Collection<CredentialParameterDto> convertCredentialsFromModel(Map<String, String> credentials) {
@@ -131,6 +144,15 @@ public class VideoSourceDto implements Dto<VideoSource> {
 
     public VideoSourceDto setCredentials(Collection<CredentialParameterDto> credentials) {
         this.credentials = credentials;
+        return this;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public VideoSourceDto setOrder(int order) {
+        this.order = order;
         return this;
     }
 }

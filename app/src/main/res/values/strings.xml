@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Crispetes</string>
-    <string name="action_settings">Ajustes</string>
     <string name="search">Buscar</string>
     <string name="noresults">No se han encontrado resultados</string>
     <string name="originalTitle">Título original</string>
@@ -29,4 +28,19 @@
     <string name="tab_datasheet">Ficha</string>
     <string name="tab_cast">Reparto</string>
     <string name="tab_videos">Videos</string>
+    <string name="nosources">No se ha activado ningún plugin de videos</string>
+    <string name="addsource">Añadir plugin</string>
+    <string name="sourcesinfo">Más información sobre los plugins de videos en www.google.es</string>
+    <string name="audio">Audio</string>
+    <string name="video">Video</string>
+    <string name="subtitles">Subtítulos</string>
+    <string name="quality">Calidad</string>
+    <string name="sources">Plugins de video</string>
+    <string name="about">Acerca de</string>
+    <string name="cancel">Cancelar</string>
+    <string name="ok">Aceptar</string>
+    <string name="enter_url">Introduce la URL</string>
+    <string name="about_content">Esta aplicación android ha sido desarrollada por Txema Martinez. Puedes contactarme en bcnbeerfestapp@gmail.com</string>
+    <string name="invalid_url">URL inválida</string>
+    <string name="unreachable_plugin">No fue posible conectar con el plugin</string>
 </resources>

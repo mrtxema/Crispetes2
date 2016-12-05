@@ -1,6 +1,7 @@
 package cat.mrtxema.crispetes.model;
 
 public class Link {
+    private final VideoSource videoSource;
     private final String id;
     private final String server;
     private final Language audioLanguage;
@@ -9,18 +10,23 @@ public class Link {
     private final Quality videoQuality;
     private final Quality audioQuality;
 
-    public Link(String id, String server, Language audioLanguage, boolean subtitles, Language subtitleLanguage, Quality videoQuality, Quality audioQuality) {
-        this.id = id;
-        this.server = server;
-        this.audioLanguage = audioLanguage;
-        this.subtitles = subtitles;
-        this.subtitleLanguage = subtitleLanguage;
-        this.videoQuality = videoQuality;
-        this.audioQuality = audioQuality;
+    public Link(LinkBuilder builder) {
+        this.videoSource = builder.getVideoSource();
+        this.id = builder.getId();
+        this.server = builder.getServer();
+        this.audioLanguage = builder.getAudioLanguage();
+        this.subtitles = builder.isSubtitles();
+        this.subtitleLanguage = builder.getSubtitleLanguage();
+        this.videoQuality = builder.getVideoQuality();
+        this.audioQuality = builder.getAudioQuality();
     }
 
     public static LinkBuilder builder() {
         return new LinkBuilder();
+    }
+
+    public VideoSource getVideoSource() {
+        return videoSource;
     }
 
     public String getId() {

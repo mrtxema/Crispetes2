@@ -1,6 +1,7 @@
 package cat.mrtxema.crispetes.model;
 
 public class LinkBuilder {
+    private VideoSource videoSource;
     private String id;
     private String server;
     private Language audioLanguage;
@@ -10,7 +11,16 @@ public class LinkBuilder {
     private Quality audioQuality;
 
     public Link build() {
-        return new Link(id, server, audioLanguage, subtitles, subtitleLanguage, videoQuality, audioQuality);
+        return new Link(this);
+    }
+
+    public VideoSource getVideoSource() {
+        return videoSource;
+    }
+
+    public LinkBuilder setVideoSource(VideoSource videoSource) {
+        this.videoSource = videoSource;
+        return this;
     }
 
     public String getId() {
